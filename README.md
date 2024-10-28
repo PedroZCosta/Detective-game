@@ -55,10 +55,10 @@ All scenarios in the game are validated using a truth table, ensuring logical co
 
 ## Contributors
 This project is a collaborative effort among fellow college students dedicated to creating an engaging gaming experience. Contributors:
-Pedro Henrique Z. Costa
-Lincoln Brunkow Neto
-Nicolas Tancon
-Gabriel
+- Pedro Henrique Z. Costa
+- Lincoln Brunkow Neto
+- Nicolas Tancon
+- Gabriel de Lima Chagas
 
 ## License
 This project is licensed under the MIT License.
