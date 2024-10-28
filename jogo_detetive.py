@@ -1,27 +1,44 @@
 import random
+import textwrap
+from rich.console import Console
+import time 
 
+def centralizar_texto(console, texto, largura=155, estilo="white", justify="center"):
+    """Centraliza o texto na tela, usando o módulo Rich para formatação."""
+    console.print(textwrap.fill(texto, width=largura), justify=justify, style=estilo)
 
-def mostrar_mapa():  # Mapa do Zoológico
-    print("+" + "-" * 65 + "+")
-    print("|       Entrada        | Praça de Alimentação   | Jaula do Cervo  |")
-    print("|----------------------|------------------------|-----------------|")
-    print("| Jaula do Macaco      |                        | Jaula do Leão   |")
-    print("|----------------------|     Cabana Central     |-----------------|")
-    print("| Jaula do Elefante    |                        | Jaula do Tigre  |")
-    print("|----------------------|----------------------- |-----------------|")
-    print("| Jaula do Rinoceronte |  Jaula do Hipopótamo   | Banheiros       |")
-    print("+" + "-" * 65 + "+")
+def mostrar_mapa(console):
+    """Exibe o mapa do zoológico no console."""
+    mapa = (
+        "+" + "-" * 65 + "+\n"
+        "|       Entrada        | Praça de Alimentação   | Jaula do Cervo  |\n"
+        "|----------------------|------------------------|-----------------|\n"
+        "| Jaula do Macaco      |                        | Jaula do Leão   |\n"
+        "|----------------------|     Cabana Central     |-----------------|\n"
+        "| Jaula do Elefante    |                        | Jaula do Tigre  |\n"
+        "|----------------------|----------------------- |-----------------|\n"
+        "| Jaula do Rinoceronte |  Jaula do Hipopótamo   | Banheiros       |\n"
+        "+" + "-" * 65 + "+\n"
+    )
+    console.print(mapa, style="bold", justify="center")
+
+def mostrar_titulo(console):
+    console = Console()  # Inicializa o console Rich
+    console.print("\n\n+---------------------------------------------+", style="bold green", justify="center")  # Exibe o título do jogo
+    console.print("|     FERA OCULTA: O MISTERIO NO ZOOLOGICO    |", style="bold green", justify="center")  # Exibe o título do jogo
+    console.print("+---------------------------------------------+\n", style="bold green", justify="center")  # Exibe o título do jogo
 
 
 def aleatorizar_cenario():
-    return random.randint(1, 3)  # Gera um número aleatório entre 1 e 3
-
+    """Retorna um número aleatório entre 1 e 3, representando diferentes cenários do jogo."""
+    return random.randint(1, 3)
 
 def definir_animais():
+    """Define os animais do zoológico e seleciona um animal morto e um possível assassino."""
     animais = ["leão", "elefante", "hipopótamo", "tigre", "rinoceronte", "macaco", "cervo"]
-    random.shuffle(animais)
+    random.shuffle(animais)  # Embaralha a lista de animais
 
-    # Definição de animais no contexto do cenário
+    # Define o animal morto e o assassino
     animal_morto = animais[0]
     assassino = animais[1]
     animal_1 = animais[2]
@@ -30,29 +47,35 @@ def definir_animais():
     animal_4 = animais[5]
     animal_5 = animais[6]
 
+    # Retorna o animal morto, o assassino e os outros animais
     return animal_morto, assassino, animal_1, animal_2, animal_3, animal_4, animal_5
 
-
-# Função para exibir o texto do cenário
-def mostrar_texto_cenario(cenario, animal_morto, assassino):
+def mostrar_texto_cenario(console, cenario, animal_morto, assassino):
+    """Exibe a descrição do cenário de acordo com o animal morto e o assassino."""
     if cenario == 1:
-        print(
+        texto = (
             f"Em uma manhã ensolarada no Zoológico da Cidade, a alegria dos visitantes se transformou em pânico quando"
             f" o {animal_morto} foi encontrado flutuando no Lago dos Hipopótamos. Os cuidadores isolaram a área, "
-            f"levantando questões sobre como o {assassino} havia chegado até ali. Qual animal matou o {animal_morto}?")
+            f"levantando questões sobre como o {assassino} havia chegado até ali. Qual animal matou o {animal_morto}?\n"
+        )
     elif cenario == 2:
-        print(f"Em uma noite de tempestade no Zoológico da Cidade, o {animal_morto} foi encontrado na área da Praça de "
-              f"alimentação com algumas marcas de mordida. Os cuidadores ficaram intrigados, pois não era claro se o "
-              f"{assassino} agiu sozinho ou em parceria. Quem matou o {animal_morto}?")
+        texto = (
+            f"Em uma noite de tempestade no Zoológico da Cidade, o {animal_morto} foi encontrado na área da Praça de "
+            f"alimentação com algumas marcas de mordida. Os cuidadores ficaram intrigados, pois não era claro se o "
+            f"{assassino} agiu sozinho ou em parceria. Quem matou o {animal_morto}?\n"
+        )
     else:
-        print(
+        texto = (
             f"Em uma noite chuvosa no Zoológico da Cidade, o silêncio da madrugada foi interrompido por gritos de pavor"
             f" dos vigilantes. Ao investigar, o {animal_morto} foi encontrado próximo ao banheiro, com sinais de ter"
             f" sido envenenado. Os cuidadores, perplexos, bloquearam o local para descobrir como o {assassino}"
-            f" conseguiu colocar o veneno. Qual animal envenenou o {animal_morto}?")
+            f" conseguiu colocar o veneno. Qual animal envenenou o {animal_morto}?\n"
+        )
 
+    centralizar_texto(console, texto)  # Centraliza e exibe o texto do cenário
 
 def definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3, animal_4, animal_5):
+    """Define as dicas disponíveis para cada cenário."""
     if cenario == 1:
         dica_principal = f"O {animal_morto} morreu afogado sem lesões corporais."
         dicas = [
@@ -68,7 +91,7 @@ def definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3
             f"Se o {animal_4} brigou por comida com o {animal_1}, então o {assassino} matou o {animal_morto}."
         ]
     elif cenario == 2:
-        dica_principal = f"O {animal_morto} morreu após uma disputa, apresentando marcas de mordidas."
+        dica_principal = f"O {animal_morto} morreu após uma disputa, apresentando marcas de mordida."
         dicas = [
             f"Se o {animal_morto} tem marcas de mordidas, então ele foi atacado pelo {assassino} ou o {animal_1} estava na praça de alimentação durante a noite e atacou o {animal_morto}.",
             f"Se o {animal_morto} morreu por mordidas profundas, então o {animal_4} estava no perímetro externo e o {animal_1} estava isolado no viveiro.",
@@ -89,30 +112,127 @@ def definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3
             f"Se o {animal_morto} foi ferido antes de morrer, então o {animal_3} esteve na área de alimentação antes da vítima.",
             f"Se o {animal_3} estava próximo à cabana central com ferimentos recentes, então ele pode ter feito algo errado na noite anterior.",
             f"O {animal_3} estava próximo à cabana central com ferimentos recentes se e somente se o {animal_morto} comeu a comida do {assassino}.",
-            f"O {animal_2} é o assassino se e somente se o {animal_morto} não foi visto durante a madrugada.",
-            f"Se o {animal_4} foi visto durante a noite e estava ausente durante o dia, então ele é o responsável pela morte do {animal_morto}.",
-            f"Se o {animal_5} já teve comportamentos estranhos e feriu o {animal_1} anteriormente, então o {animal_1} estava isolado em seu viveiro.",
-            f"Se o {animal_1} estava ausente na manhã da descoberta, então ele é o responsável pela morte do {animal_morto}.",
-            f"Se o {animal_2} estava doente e não compareceu ao bebedouro, então ele pode ter sido o responsável pela morte do {animal_morto}.",
-            f"Se o {animal_3} já foi tratado no consultório veterinário, então ele não é o assassino."
+            f"O {animal_2} é o assassino se e somente se o {animal_morto} foi atacado na área de alimentação.",
+            f"O {animal_4} pode ter envenenado o {animal_morto} durante a madrugada.",
+            f"Se o {animal_5} já tinha se comportado de forma estranha, então o {animal_5} pode ser o culpado.",
+            f"Se o {animal_2} não estava na área da praça de alimentação, então ele não é o assassino.",
+            f"Se o {animal_1} estava ausente durante a manhã, então ele é o responsável pela morte do {animal_morto}.",
+            f"Se o {animal_2} estava próximo ao banheiro, então o {animal_4} não pode ser o assassino."
         ]
 
     return dica_principal, dicas
 
 
+def investigar(dia_atual):
+    # A chance de sucesso começa em 70% e diminui 10% a cada dia, até um mínimo de 20%
+    chance_sucesso = max(0.2, 0.7 - 0.1 * (dia_atual - 1))  # Calcula a chance de sucesso da investigação
+    sucesso = random.random() < chance_sucesso  # Retorna True se a investigação for bem-sucedida
+    return sucesso  # Retorna o resultado da investigação
+
+
 def main():
-    mostrar_mapa()
-    cenario = aleatorizar_cenario()
-    animal_morto, assassino, animal_1, animal_2, animal_3, animal_4, animal_5 = definir_animais()
-    mostrar_texto_cenario(cenario, animal_morto, assassino)
-    dica_principal, dicas = definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3, animal_4,
-                                          animal_5)
+    k = 1000  # Valor constante que define a pontuação máxima possível
+    
+    while True:  # Loop para permitir jogar novamente
+        console = Console()  # Inicializa o console Rich
+        cenario = aleatorizar_cenario()  # Gera um cenário aleatório
+        animal_morto, assassino, animal_1, animal_2, animal_3, animal_4, animal_5 = definir_animais()  # Define os animais do jogo
+        animais = {  # Dicionário de animais com seus nomes
+            "leão": {"nome": "Leão"},
+            "elefante": {"nome": "Elefante"},
+            "hipopótamo": {"nome": "Hipopótamo"},
+            "tigre": {"nome": "Tigre"},
+            "rinoceronte": {"nome": "Rinoceronte"},
+            "macaco": {"nome": "Macaco"},
+            "cervo": {"nome": "Cervo"},
+        }
+        pistas_encontradas = []  # Inicializa uma lista para armazenar pistas encontradas
+        monster_found = False  # Inicializa a variável para controle do monstro
+        jogo_vencido = False  # Variável para verificar se o jogador venceu
 
-    print(dica_principal)
-    random.shuffle(dicas)  # Embaralha as dicas
-    for i, dica in enumerate(dicas, 1):
-        print(f"Dica {i}: {dica}")
+        dica_principal, dicas = definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3, animal_4, animal_5)  # Define as dicas
+        mostrar_titulo(console)  # Exibe o título
+        time.sleep(0.5)
+        mostrar_mapa(console)  # Exibe o mapa do zoológico
+        time.sleep(0.5)
+        mostrar_texto_cenario(console, cenario, animal_morto, assassino)  # Exibe o cenário do jogo
+        time.sleep(0.5)
+        print(assassino)
+        
+        dia_atual = 1  # Inicializa o dia atual
+        pistas_encontradas.append(dica_principal)  # Adiciona a dica principal às pistas encontradas
 
+        while not monster_found:  # Enquanto o monstro não for encontrado
+            console.print(f"\nDia {dia_atual}", style="bold")  # Exibe o dia atual
+            
+            console.print("Dicas encontradas até agora:", style="bold")
+            for pista in pistas_encontradas:
+                time.sleep(0.5)
+                print(f"- {pista}")
+                
+            if dia_atual == 10:
+                acao = input("Hoje é o dia 10! Você só pode escolher a opção:\n1. Confrontar o monstro\n").strip()
+            else:
+                console.print("Escolha uma ação:", style="bold")
+                time.sleep(0.5)
+                acao = input("1. Investigar\n2. Confrontar o monstro\n3. Passar o dia\n").strip()
+
+            if acao == '1' and dia_atual != 10:
+                time.sleep(0.5)
+                print("Investigando mais pistas...")
+                if investigar(dia_atual):
+                    dicas_disponiveis = [dica for dica in dicas if dica not in pistas_encontradas]
+                    if dicas_disponiveis:
+                        nova_dica = random.choice(dicas_disponiveis)
+                        pistas_encontradas.append(nova_dica)
+                        console.print(f"Você encontrou uma nova pista: {nova_dica}", style="bold green")
+                    dia_atual += 1
+                else:
+                    monster_found = True
+                    console.print("Sua investigação falhou! O monstro te encontrou.", style="bold red")
+
+            elif acao == '2' or (acao == '1' and dia_atual == 10):
+                time.sleep(0.5)
+                resposta = input(
+                    "Quem você acha que é o monstro? (leão, elefante, hipopótamo, tigre, rinoceronte, macaco, cervo): ").strip().lower()
+                if resposta in animais:
+                    time.sleep(0.5)
+                    print(f"Você confrontou o {animais[resposta]['nome']}!")
+                    if resposta == assassino:
+                        console.print("Você encontrou o monstro! Parabéns, você resolveu o mistério!", style="bold green")
+                        jogo_vencido = True  # Marca o jogo como vencido
+                        monster_found = True
+                        
+                        # Calcula a pontuação com base nos dias usados
+                        pontuacao = k * (1 / dia_atual)
+                        console.print(f"Sua pontuação final é: {pontuacao:.2f}", style="bold yellow")
+                    else:
+                        console.print("Você estava errado! O monstro escapuliu.", style="bold red")
+                        break
+                else:
+                    console.print("Essa não é uma opção válida.", style="bold red")
+
+            elif acao == '3' and dia_atual != 10:
+                dia_atual += 1
+                print("Você passou o dia...")
+                dicas_disponiveis = [dica for dica in dicas if dica not in pistas_encontradas]
+                if dicas_disponiveis:
+                    nova_dica = random.choice(dicas_disponiveis)
+                    pistas_encontradas.append(nova_dica)
+                    console.print(f"Você recebeu uma nova dica: {nova_dica}", style="bold green")
+                else:
+                    console.print("Não há mais dicas para serem dadas.", style="bold red")
+            else:
+                console.print("Ação inválida. Tente novamente.", style="bold red")
+
+        # Verifica o motivo do final do jogo
+        if not jogo_vencido: 
+            console.print("Você foi encontrado pelo monstro! Fim de jogo.", style="bold red")  # Mensagem de fim de jogo por derrota
+
+        # Pergunta se o jogador deseja jogar novamente
+        jogar_novamente = input("Deseja jogar novamente? (s/n): ").strip().lower()
+        if jogar_novamente != 's':
+            break
 
 if __name__ == "__main__":
     main()
