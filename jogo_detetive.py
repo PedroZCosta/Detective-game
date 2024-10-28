@@ -157,6 +157,7 @@ def main():
 
         while not monster_found:  # Enquanto o monstro não for encontrado
             console.print(f"\nDia {dia_atual}", style="bold")  # Exibe o dia atual
+            print(chance_de_sucesso)
             for pista in pistas_encontradas:
                 time.sleep(0.5)
                 print(f"- {pista}")
