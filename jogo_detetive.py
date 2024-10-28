@@ -157,7 +157,7 @@ def main():
         time.sleep(0.5)
         mostrar_texto_cenario(console, cenario, animal_morto, assassino)  # Exibe o cenário do jogo
         time.sleep(0.5)
-        print(assassino)
+        
         
         dia_atual = 1  # Inicializa o dia atual
         pistas_encontradas.append(dica_principal)  # Adiciona a dica principal às pistas encontradas
