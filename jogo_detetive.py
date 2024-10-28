@@ -10,6 +10,7 @@ def centralizar_texto(console, texto, largura=155, estilo="white", justify="cent
 def mostrar_mapa(console):
     """Exibe o mapa do zoológico no console."""
     mapa = (
+        "MAPA \n"
         "+" + "-" * 65 + "+\n"
         "|       Entrada        | Praça de Alimentação   | Jaula do Cervo  |\n"
         "|----------------------|------------------------|-----------------|\n"
@@ -122,14 +123,6 @@ def definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3
 
     return dica_principal, dicas
 
-
-def investigar(dia_atual):
-    # A chance de sucesso começa em 70% e diminui 10% a cada dia, até um mínimo de 20%
-    chance_sucesso = max(0.2, 0.7 - 0.1 * (dia_atual - 1))  # Calcula a chance de sucesso da investigação
-    sucesso = random.random() < chance_sucesso  # Retorna True se a investigação for bem-sucedida
-    return sucesso  # Retorna o resultado da investigação
-
-
 def main():
     k = 1000  # Valor constante que define a pontuação máxima possível
     
@@ -158,14 +151,12 @@ def main():
         mostrar_texto_cenario(console, cenario, animal_morto, assassino)  # Exibe o cenário do jogo
         time.sleep(0.5)
         
-        
         dia_atual = 1  # Inicializa o dia atual
+        chance_de_sucesso = 0.9  # Chance inicial de sucesso para investigar
         pistas_encontradas.append(dica_principal)  # Adiciona a dica principal às pistas encontradas
 
         while not monster_found:  # Enquanto o monstro não for encontrado
             console.print(f"\nDia {dia_atual}", style="bold")  # Exibe o dia atual
-            
-            console.print("Dicas encontradas até agora:", style="bold")
             for pista in pistas_encontradas:
                 time.sleep(0.5)
                 print(f"- {pista}")
@@ -180,16 +171,21 @@ def main():
             if acao == '1' and dia_atual != 10:
                 time.sleep(0.5)
                 print("Investigando mais pistas...")
-                if investigar(dia_atual):
+                
+                if random.random() < chance_de_sucesso:
                     dicas_disponiveis = [dica for dica in dicas if dica not in pistas_encontradas]
                     if dicas_disponiveis:
                         nova_dica = random.choice(dicas_disponiveis)
                         pistas_encontradas.append(nova_dica)
                         console.print(f"Você encontrou uma nova pista: {nova_dica}", style="bold green")
-                    dia_atual += 1
+                    else:
+                        console.print("Não há mais dicas para serem encontradas.", style="bold red")
                 else:
                     monster_found = True
                     console.print("Sua investigação falhou! O monstro te encontrou.", style="bold red")
+                
+                # Não aumenta o dia ao investigar, apenas diminui a chance de sucesso
+                chance_de_sucesso -= 0.17  
 
             elif acao == '2' or (acao == '1' and dia_atual == 10):
                 time.sleep(0.5)
@@ -214,6 +210,7 @@ def main():
 
             elif acao == '3' and dia_atual != 10:
                 dia_atual += 1
+                chance_de_sucesso -= 0.05  # Reduz a chance de sucesso no início de um novo dia
                 print("Você passou o dia...")
                 dicas_disponiveis = [dica for dica in dicas if dica not in pistas_encontradas]
                 if dicas_disponiveis:
