@@ -69,8 +69,7 @@ def mostrar_texto_cenario(console, cenario, animal_morto, assassino):
         texto = (
             f"Em uma noite chuvosa no Zoológico da Cidade, o silêncio da madrugada foi interrompido por gritos de pavor"
             f" dos vigilantes. Ao investigar, o {animal_morto} foi encontrado próximo ao banheiro, com sinais de ter"
-            f" sido envenenado. Os cuidadores, perplexos, bloquearam o local para descobrir como o {assassino}"
-            f" conseguiu colocar o veneno. Qual animal envenenou o {animal_morto}?\n"
+            f" sido envenenado. Qual animal envenenou o {animal_morto}?\n"
         )
 
     centralizar_texto(console, texto)  # Centraliza e exibe o texto do cenário
@@ -157,7 +156,6 @@ def main():
 
         while not monster_found:  # Enquanto o monstro não for encontrado
             console.print(f"\nDia {dia_atual}", style="bold")  # Exibe o dia atual
-            print(chance_de_sucesso)
             for pista in pistas_encontradas:
                 time.sleep(0.5)
                 print(f"- {pista}")
