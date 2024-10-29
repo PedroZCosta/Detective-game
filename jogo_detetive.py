@@ -1,7 +1,8 @@
 import random
 import textwrap
-from rich.console import Console
 import time 
+from rich.console import Console
+# adicionar visualizacao do monstro do final
 
 def centralizar_texto(console, texto, largura=155, estilo="white", justify="center"):
     """Centraliza o texto na tela, usando o módulo Rich para formatação."""
@@ -57,19 +58,19 @@ def mostrar_texto_cenario(console, cenario, animal_morto, assassino):
         texto = (
             f"Em uma manhã ensolarada no Zoológico da Cidade, a alegria dos visitantes se transformou em pânico quando"
             f" o {animal_morto} foi encontrado flutuando no Lago dos Hipopótamos. Os cuidadores isolaram a área, "
-            f"levantando questões sobre como o {assassino} havia chegado até ali. Qual animal matou o {animal_morto}?\n"
+            f"levantando questões sobre como o assassino havia chegado até ali. Qual animal matou o {animal_morto}?\n"
         )
     elif cenario == 2:
         texto = (
             f"Em uma noite de tempestade no Zoológico da Cidade, o {animal_morto} foi encontrado na área da Praça de "
             f"alimentação com algumas marcas de mordida. Os cuidadores ficaram intrigados, pois não era claro se o "
-            f"{assassino} agiu sozinho ou em parceria. Quem matou o {animal_morto}?\n"
+            f"assassino agiu sozinho ou em parceria. Quem matou o {animal_morto}?\n"
         )
     else:
         texto = (
             f"Em uma noite chuvosa no Zoológico da Cidade, o silêncio da madrugada foi interrompido por gritos de pavor"
             f" dos vigilantes. Ao investigar, o {animal_morto} foi encontrado próximo ao banheiro, com sinais de ter"
-            f" sido envenenado. Os cuidadores, perplexos, bloquearam o local para descobrir como o {assassino}"
+            f" sido envenenado. Os cuidadores, perplexos, bloquearam o local para descobrir como o assassino"
             f" conseguiu colocar o veneno. Qual animal envenenou o {animal_morto}?\n"
         )
 
