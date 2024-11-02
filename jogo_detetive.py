@@ -225,7 +225,9 @@ def main():
 
         # Verifica o motivo do final do jogo
         if not jogo_vencido: 
-            console.print("Você foi encontrado pelo monstro! Fim de jogo.", style="bold red")  # Mensagem de fim de jogo por derrota
+            console.print(f"O assasino era o {assassino}!", style="bold red")# Mensagem relevando o assasino
+            console.print("Fim de jogo!", style="bold red")  # Mensagem de fim de jogo por derrota
+            
 
         # Pergunta se o jogador deseja jogar novamente
         jogar_novamente = input("Deseja jogar novamente? (s/n): ").strip().lower()
