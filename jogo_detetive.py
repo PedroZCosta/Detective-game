@@ -153,7 +153,7 @@ def main():
         time.sleep(0.5)
         
         dia_atual = 1  # Inicializa o dia atual
-        chance_de_sucesso = 0.9  # Chance inicial de sucesso para investigar
+        chance_de_sucesso = 0.99  # Chance inicial de sucesso para investigar
         pistas_encontradas.append(dica_principal)  # Adiciona a dica principal às pistas encontradas
 
         while not monster_found:  # Enquanto o monstro não for encontrado
