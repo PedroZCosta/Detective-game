@@ -119,7 +119,9 @@ def definir_dicas(cenario, animal_morto, assassino, animal_1, animal_2, animal_3
             f"Se o {animal_5} já tinha se comportado de forma estranha, então o {animal_5} pode ser o culpado.",
             f"Se o {animal_2} não estava na área da praça de alimentação, então ele não é o assassino.",
             f"Se o {animal_1} estava ausente durante a manhã, então ele é o responsável pela morte do {animal_morto}.",
-            f"Se o {animal_2} estava próximo ao banheiro, então o {animal_4} não pode ser o assassino."
+            f"Se o {animal_2} estava próximo ao banheiro, então o {animal_4} não pode ser o assassino.",
+            f"Se o {animal_3} brigou por abrigo com o {animal_2}, então o {assassino} envenenou o {animal_morto}.",
+            f"O {animal_4} estava na área dos banheiros." 
         ]
 
     return dica_principal, dicas
